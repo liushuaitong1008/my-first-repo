@@ -1,0 +1,551 @@
+!+tab生成骨架
+
+写在<p>段落标签内，文字才能实现换行操作。
+
+
+
+*常见的转义字符：
+
+转义字符	意义
+&lt;	小于号
+&gt;	大于号
+&nbsp;	空格（不会被折叠）
+&copy;	版权符号©
+
+*对批量代码快速注释ctrl+/
+
+
+html5提供了三种列表标签，分别是 无序列表、有序列表及定义列表
+
+*标签	语义
+<ul></ul>	无序列表（ul表示unordered list）
+<ol></ol>	有序列表
+<dl></dl>	定义列表
+
+*实现无序列表需要<ul></ul>和<li></li>标签组合使用。
+<ul></ul>即无序列表，做为父标签；<li></li>即每个列表项，做为子标签。
+父标签子标签的形式叫做父子组合标签。
+
+*有序列表标签可以设置type属性，用来设置编号的类型。
+
+tpye属性值	描述
+a	表示小写英文字母编号
+A	表示大写英文字母编号
+i	表示小写罗马字母编号
+I	表示大写罗马字母编号
+1	表示数字编号（默认）
+
+start属性用来指定列表编号的起始值
+start=“3” 
+
+reversed属性用来指定列表是否要倒序排列，reversed属性不需要值，只需要写上reversed这个字母即可
+
+定义列表是需要逐条给出定义描述的列表
+
+下面来解释每个标签的语义：
+
+<dl> </dl>为定义列表标签；
+<dt> </dt>为定义列表中的数据项；
+<dd> </dd>为对定义列表中的数据项的解释。
+
+图片标签就是<img>标签，img是image(图片)的缩写。用来在网页中插入图片。
+
+图片插入网页的本质：
+
+图片本质上没有被插入网页中，只是被引入到了网页中。
+所以我们如果要将图片标签的代码上传到服务器上时，
+需要把src里的图片也一起上传到服务器，
+否则服务器找不到src路径对应的图片也就无法显示在网页中了。
+
+alt属性是alternate(替代品)的缩写，它是对图像的文本描述，不是强制性的。
+<img src="images/husky.png" alt="TFS_CLUB">  
+
+<img> 标签的 width、height属性
+
+想要设置网页图片的大小时，就需要用到width、height属性。分别设置宽度和高度，单位是像素，注意必须写单位。
+
+width和height不需要两个一起设置，也可以只设置一个。比如只设置宽度width，height则会按图片的原始比例自动缩放。
+
+*超级链接是将网页和网页连接到一起的方法。
+
+超级链接的标签是<a>标签，a是anchor（锚）的首字母，它的属性href属性(hypertext reference)用来配置想要链接的第二个网页的网址。
+<!--超级链接标签：-->
+<a href="https://www.baidu.com/">百度一下</a>
+
+*title属性用于设置鼠标的悬停文本，鼠标放上去会有个悬浮框出来，加上title属性后会有这种效果：
+
+<a href="https://www.baidu.com/" title："点击打开百度一下">百度一下</a>
+
+*可以在<a>标签中配置target属性来实现单击自动用新标签页打开链接:
+
+<a href="https://www.baidu.com/" title="点击打开百度一下" target="blank">百度一下</a>
+
+*给图片设置超级链接，只需要用<a>标签包裹img标签即可：
+
+<p><a href="https://zhongguoyuyan.cn" title="点击进入语保平台" target="blank"><img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"></a></p>
+
+*较长的页面，可以适当给h系列标签添加id属性，它将称为页面内的“锚点”。
+
+“锚点”的作用：
+
+当网址后面添加#时，页面将自动滚动到锚点所在位置
+其他页面的超级链接，可以链接到指定的锚点:
+<a href="https://vibaike.com/117123/?ivk_sa=1024320u#index-2">前端开发-html</a>
+
+
+
+✨下载链接
+
+指向exe、zip、rar等文件格式的链接，将自动成为下载链接，点击这个链接浏览器会自动下载链接中的文件。
+<a href="1.zip">下载</a>
+
+✨邮件链接
+
+有mailto:前缀的链接是邮件链接，系统将自动打开Email相关软件。
+<a href="mailto:139xxxx678@qq.com">点击发邮件</a>
+
+✨电话链接
+
+有tel:前缀的链接是电话链接，系统将自动打开拨号盘（需要手机打开这个链接）
+<a href="tel:12306">打电话买火车票</a>
+
+音频标签是<audio>标签，兼容到IE9。
+
+浏览器常用的音频格式是mc3和ogg格式。
+
+示例代码：
+<audio controls src="音频地址">抱歉，您的浏览器不支持audio标签，请升级浏览器。</audio>
+audio标签的其他属性：
+
+autoplay属性
+
+声明autoplay属性，音频会自动播放。常用的浏览器为了不打扰用户，即便添加了autoplay属性也会不允许自动播放音频，必须让用户手动点击才能播放。所以尽量不要使用这个属性。
+
+loop属性
+
+声明loop属性，音频会循环播放。
+
+⭐️ 视频标签
+
+视频标签是<video>标签，兼容到IE9。
+
+浏览器常用的视频格式是mc4、ogv、webm等格式。
+
+视频标签和音频标签的属性使用方式基本一致。
+
+示例代码：
+<video controls src="视频地址" loop autoplay>抱歉，您的浏览器不支持video标签，请升级浏览器。</video>
+
+
+⭐️ 区块标签
+
+HTML5推出的区块标签：
+
+区块标签	描述
+<section>	文档的区域，语义比div大
+<article>	文档的核心文章内容，会被搜索引擎主要抓取
+<aside>	文档的非必要相关内容，比如广告等
+<nav>	导航条
+<header>	页头
+<main>	网页核心部分
+<footer>	页脚
+上面这些标签要熟记背诵，因为以后我们在网页制作过程总会非常频繁的使用这些标签。
+
+有了这些标签，网页中就不会只用div标签去分割了，网也增加了网页的代码可读性。并且有了一定的规范，搜索引擎可以准确的识别、抓取网页的相关内容。
+
+
+🌟 “span” 标签
+
+<span> 标签是 文本中的“区块”标签 ，本身没有任何特殊的显示效果，可以结合CSS来丰富样式。
+我们需要特殊样式或者特殊标记的内容可以写到span标签里面。
+
+ “b”、“u”、“i” 标签
+
+<b>是加粗标签，可以将文本加粗；
+<u>是下划线标签，可以将文本加下划线；
+<i>是倾斜标签，可以将文本倾斜；
+现在已经被CSS替代，但也可以用来在强调文本。
+
+🌟 “strong”、“em”、"mark"标签
+
+<strong>代表特别重要文字
+<em>代表强调文字（em是emphasize，强调的缩写）
+<mark>代表需要被高亮的文字。
+<strong>、<em>、<mark>标签均表示强调语义。不用特别区分，只需要知道重要的文字放在这三个标签里就可以了。
+
+
+🌟 “figure”、“figcaption” 标签
+<figure>元素代表一段独立的内容，与说明<figcaption>配合使用，它是一个独立的引用单元，比如建立读者拓展视野的图片等，当这部分转移到附录中或者其他页面时不会影响到主体。
+
+相当于页面的拓展，可有可无！。
+
+
+
+⭐️ **表单的创建
+
+所有HTML表单都以一个<form>元素开始
+
+form这个单词在英语中就是表单的意思。
+
+⭐️ 表单的基本控件
+
+学会了表单的创建之后，还要编写表单的内容。比如注册邮箱这个表单，有一些文本框、按钮等内容，我们管这种内容叫做表单的基本”控件“。
+
+表单具体有哪些基本控件呢？
+
+答：单行文本框、单选按钮、复选框、下拉框、密码文本框、多行文本框等。
+
+🌟 单行文本框
+
+单行文本框要用<input>标签来创建。
+
+关于<input>标签：
+input标签是个单标签。并且input标签除了创建输入文本的框之外，还可以创建单选按钮、多选按钮等输入类型的控件。
+<input> 标签的 type(类型) 属性 的值来决定创建的是什么控件。
+创建单行文本框，<input>标签的type属性值要设置为”text“。
+
+除此之外，还有以下几种属性可选：
+
+value属性：表示已经填写好的值
+placeholder属性：表示提示文本（将以浅色文字写在文本框中，并不是文本框中的值）。
+disabled属性：表示用户不能与元素交互，即“锁死”。
+
+
+        <p>
+            手机号：<input type="text">
+        </p>
+        <p>
+            邮箱地址：<input type="text" placeholder="请输入邮箱地址">
+        </p>
+        <p>
+            国籍：<input type="text" value="中国" disabled>
+        </p>
+
+
+🌟 单选按钮
+
+单选按钮也是用<input>标签来创建，type属性值设置为"radio"。
+
+除此之外，单选按钮还要注意以下三个属性：
+
+name属性：单选按钮一般为互斥的，即选择了A，那B就会自动取消选择。互斥的单选按钮要设置它们的name属性为相同值。
+value属性：必须设置，向服务器提交时，提交的就是value属性的值
+checked属性：单选按钮如果加上了checked属性，表示默认被选中
+
+<p>
+            性别：
+            <input type="radio" name="sex" value="男" checked> 男
+            <input type="radio" name="sex" value="女" > 女
+        </p>
+		
+		
+<label>标签
+
+到此，单选按钮还有个非常不人性化的“BUG”，就是必须得点击那个小圆圈才可以选中，点击“男”或者“女”这两个文字的时候，不能选中。为了解决这个问题，就要用到<label>标签。
+
+<label>标签的作用：<label>标签用来将文字和单选按钮进行绑定，用户单击文字的时候也视为点击了单选按钮。
+
+注意：在HTML4时代，label标签时通过for属性和单选按钮的id进行绑定的，而且不需要把整个单选按钮包裹。HTML4时代label标签包裹单选按钮的写法：
+
+
+🌟 复选框
+
+复选框也是用<input>标签来创建，type属性值设置为"checkbox"。
+
+同样，复选按钮还要注意以下属性：
+
+name属性：同组复选框应该设置name属性为相同值
+value属性：同单选框一样，向服务器提交value属性的值
+checked属性：默认勾选
+
+🌟 密码框
+
+密码框也是用<input>标签来创建，type属性值设置为"password"。
+
+		<p>
+            密码：
+            <input type="password" placeholder="请输入密码">
+        </p>
+
+🌟 下拉菜单
+
+下拉菜单需要使用<select>+<option>标签创建。<select>标签代表下拉菜单，<option>标签是内部选项。
+
+<option>标签的属性：
+
+value属性：必须设置，表示向服务器提交的值
+
+ <p>
+     省：
+     <select>
+         <option value="beijing">北京</option>
+         <option value="shanghai">上海</option>
+         <option value="guangdong">广东</option>
+         <option value="hebei">河北</option>
+         <option value="neimenggu">内蒙古</option>
+     </select>
+ </p>
+
+
+🌟 多行文本框
+
+多行文本框使用<textarea></textarea>标签创建。textarea翻译过来为文本区域，顾名思义就是可以输入多行文本的区域。
+
+<textarea>标签的属性：
+
+rows属性：定义多行文本框的行数
+cols属性：定义多行文本框的列数
+
+<p>
+    您的意见：
+    <textarea cols="60" rows="10"></textarea>
+</p>
+
+
+🌟 三种按钮
+
+表单中常见三种按钮：普通按钮、提交按钮、重置按钮。
+
+这三种按钮也是用<input>标签来创建。区别是type属性不同。
+
+type属性	按钮
+type=“button”	普通按钮(可以用<button></button>简写)
+type=“submit”	提交按钮
+type=“reset”	重置按钮
+
+
+⭐️HTML新增的表单控件
+🌟HTML5更丰富的input种类
+先来看HTML5新增了哪些input种类：
+
+type属性值	控件
+color	颜色选择控件
+data、time	日期、时间选择控件
+email	电子邮件输入控件
+file	文本选择控件
+number	数字输入控件
+range	拖曳条
+search	搜索框
+url	网址输入控件
+
+
+<form>
+    <p>
+        颜色选择控件：
+        <input type="color">
+    </p>
+    <p>
+        日期控件：
+        <input type="date" required>
+    </p>
+    <p>
+        时间控件：
+        <input type="time">
+    </p>
+    <p>
+        电子邮件输入控件：
+        <input type="email" required>
+    </p>
+    <p>
+        文本选择控件：
+        <input type="file" required>
+    </p>
+    <p>
+        数字输入控件：
+        <input type="number">
+    </p>
+    <p>
+        拖曳条：
+        <input type="range" min="10" max="20">
+    </p>
+    <p>
+        搜索框：
+        <input type="search">
+    </p>
+    <p>
+        url:
+        <input type="url">
+    </p>
+</form>
+
+
+🌟"datalist" 控件
+<datalist>控件可以为输入框提供一些备选项，当用户输入的内容与备选项文字相同时，将会显示智能感应。
+
+<datalist>控件可以结合<input>标签的list属性来使用。
+
+<form>
+    <p>
+        智能感应控件:
+        <input type="text" list="province-list">
+        <datalist id="province-list">
+            <option value="河北">
+            <option value="河南">
+            <option value="山西">
+            <option value="广西">
+            <option value="广东">
+            <option value="山东"> 
+        </datalist>
+    </p>
+</form>
+
+
+*学习表格
+⭐️创建表格
+我们通常理解的表格就是N行N列的一个表格，在HTML中理解表格的方式和N行N列稍微有些偏差。
+
+*在HTML中，表格用<table></table>创建。
+
+*table>tr*行数>td*列数 Tab键 自动生成表格
+
+一个表格还是有N行，每行用一个标签对<tr></tr>创建。每行都有N个格，每格用一个标签对<td></td>创建。
+
+tr表示table row，即表格的行
+td表示table data，即表格的数据
+
+<table>标签的caption标签：表格的标题，常常最为<table>的第一个子元素出现，写在所有的tr之前
+
+<th>标签是表格的标题标签，th和td是同一级的。
+
+<table border="1">
+    <caption>字母表</caption>
+    <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+    </tr>
+    <tr>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+        <td>D</td>
+    </tr>
+</table>
+
+*合并单元格：	rowspan：列 colspan：行
+
+<table border="1" width="200">
+    <tr>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+        <td>D</td>
+    </tr>
+    <tr>
+        <td>A1</td>
+        <td rowspan="2">B1</td>
+        <td rowspan="3" colspan="2">D1</td>
+    </tr>
+    <tr>
+        <td>A2</td>
+    </tr>
+    <tr>
+        <td>A3</td>
+        <td>B3</td>
+    </tr>
+</tble>
+
+合并单元格的难点：
+
+一定要分清楚有几行，每行有几个小格，有几个小格就有几个td。遵循这个原则，就不怕合并出错。
+
+
+在标题和段落之间添加水平线。
+
+<h1>London</h1>
+<hr>
+<p>London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+
+
+在段落中间添加换行符：
+<p>My Bonnie lies
+<br>
+over the ocean.</p>
+
+将这首诗包裹在 HTML 标记周围，当元素显示时将保留所有空格和换行符。
+
+<pre>
+
+  My Bonnie lies over the ocean.
+
+  My Bonnie lies over the sea.
+
+  My Bonnie lies over the ocean.
+
+  Oh, bring back my Bonnie to me.
+</pre>
+
+
+
+<body align = "center">  整体居中、
+
+
+
+emmet快捷生成：
+
+
+使用`>`符号：表示生成子元素
+使用`+`符号：表示生成同级元素
+使用`^`符号：表示生成父级元素的同级元素
+
+综合例子，输入 h1>h2>h3+h4>p>a^h5+div^^h6+span,生成内容如下：
+<h1>
+    <h2>
+        <h3></h3>
+        <h4>
+            <p><a href=""></a></p>
+            <h5></h5>
+            <div></div>
+        </h4>
+    </h2>
+    <h6></h6>
+    <span></span>
+</h1>
+
+
+综合例子，输入 h1#aaa.b.ab[ccc=ddd eee=fff]{ggg},生成内容如下:
+<h1 id="aaa" class="b ab" ccc="ddd" eee="fff">ggg</h1>
+
+
+使用:和使用缩写
+<!-- 输入`input:password` -->
+<input type="password" name="" id="">
+<!-- 输入`a:mail` -->
+<a href="mailto:"></a>
+<!-- 输入`btn` -->
+<button></button>
+<!-- 输入`btn:s` -->
+<button type="submit"></button>
+
+乘法：
+<!-- 输入`ul>li*5` -->
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+
+自动计数:
+<!-- 输入`ul>li.item${test$$}*5` -->
+<ul>
+    <li class="item1">test01</li>
+    <li class="item2">test02</li>
+    <li class="item3">test03</li>
+    <li class="item4">test04</li>
+    <li class="item5">test05</li>
+</ul>
+
+
+分类四（奇奇怪怪）
+tbody>tr>(td.item$$@-)lorem5*5
+tbody>tr>(td.item$$@->lorem5)*5 和 tbody>tr>((td.item$$@-)>lorem5)*5 和 ((td.item$$@-)>lorem5*3)*5
+直接giao不会出现提示，可以在后边加一个*1或者+xxx,就会出现提示
+()的使用，如果以)结尾则不会出现提示，可以在后边加一个*1或者+xxx,就会出现提示
+()的用法，(h1)h2无效，h5>(h1)h2有效且等价于h5>h1+h2,奇怪的用法一般转换成+号。
+lorem的用法，ul>lorem和ul>lorem*1效果不相同。后者自动为lorem补上了标签。含*。
+lorem的用法，lorem5*3和ul>lorem5*3效果不相同。后者自动为lorem补上了标签。含>。
+总结：巧用*号,巧用()号,lorem自动补标签,奇怪的用法一般转换成+号。

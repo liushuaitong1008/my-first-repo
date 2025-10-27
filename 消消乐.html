@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九族消消乐</title>
+	  <meta name="description" content="练习用html">
+	  <meta name="keywords" content="消消乐">
+	  <meta name="author" content="橘猫消消乐 - www.baidu.com">	
+	  <link rel="shortcut icon" href=""> 
+	  <script>
+	  var _hmt = _hmt || [];
+	  (function() {
+	    var hm = document.createElement("script");
+	    hm.src = "https://hm.baidu.com/hm.js?a9430a37066911650e26adadcc42798a";
+	    var s = document.getElementsByTagName("script")[0]; 
+	    s.parentNode.insertBefore(hm, s);
+	  })();
+	  </script>
+	  <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+	  <script>LA.init({id:"JxVJPIpe3UAQqoDx",ck:"JxVJPIpe3UAQqoDx"})</script>
+	      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7056167681359419"
+	       crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5dc;
+            color: #5a3921;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #main-container {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            gap: 20px;
+        }
+        #game-container {
+            flex: 1;
+            max-width: 500px;
+            background-color: #fff9e6;
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+    /*@media (min-width: 901px) {*/
+    /*    #game-container {*/
+    /*        margin-left: 18%;*/
+    /*    }*/
+    /*}        */
+    
+    @media (min-width: 901px) {
+        #rules-sidebar {
+            margin-left: 5%;
+        }
+    }        
+        #leaderboard-sidebar {
+            width: 450px;
+            background-color: #fff9e6;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        h1 {
+            color: #8b4513;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        #stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .stat {
+            background-color: rgba(210, 180, 140, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            grid-gap: 5px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        /* 菜品等级颜色 - 粉色紫色系 */
+        .lvl1 { background-color: #ffcdd2; color: #5a3921; }
+        .lvl2 { background-color: #f8bbd0; color: #5a3921; }
+        .lvl3 { background-color: #e1bee7; color: #5a3921; }
+        .lvl4 { background-color: #d1c4e9; color: #5a3921; }
+        .lvl5 { background-color: #c5cae9; color: #5a3921; }
+        .lvl6 { background-color: #bbdefb; color: #5a3921; }
+        .lvl7 { background-color: #b3e5fc; color: #5a3921; }
+        .lvl8 { background-color: #b2ebf2; color: #5a3921; }
+        .lvl9 { background-color: #b2dfdb; color: #5a3921; }
+        .lvl10 { background-color: #c8e6c9; color: #5a3921; }
+        .lvl11 { background-color: #dcedc8; color: #5a3921; }
+        .lvl12 { background-color: #f0f4c3; color: #5a3921; }
+        .lvl13 { background-color: #fff9c4; color: #5a3921; }
+        .lvl14 { background-color: #ffecb3; color: #5a3921; }
+        .lvl15 { background-color: #ffe0b2; color: #5a3921; }
+        #message {
+            min-height: 24px;
+            color: #8b4513;
+            font-style: italic;
+            text-align: center;
+        }
+        button {
+            background-color: #8d6e63;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #6d4c41;
+        }
+        /* 模式选择样式 */
+        #mode-selection {
+            margin: 15px 0;
+            text-align: center;
+        }
+        .mode-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        /* 游戏结束弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff9e6;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .modal h2 {
+            color: #8b4513;
+        }
+        #username-input {
+            padding: 8px;
+            margin: 10px 0;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #8d6e63;
+        }
+        /* 排行榜样式 */
+        #leaderboard-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        #leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .leaderboard-tab {
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .leaderboard-tab.active {
+            border-bottom: 2px solid #8b4513;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #d2b48c;
+            text-align: center;
+        }
+        th {
+            background-color: rgba(210, 180, 140, 0.3);
+        }
+        tr:nth-child(even) {
+            background-color: rgba(210, 180, 140, 0.1);
+        }
+        @media (max-width: 900px) {
+            #main-container {
+                flex-direction: column;
+            }
+            #leaderboard-sidebar {
+                width: auto;
+            }
+        }
+        #leaderboard-status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #8b4513;
+            text-align: center;
+            font-style: italic;
+        }
+        /* 无尽模式提交按钮 */
+        #endless-submit-btn {
+            display: none;
+        }
+        
+        #rules-sidebar {
+    width: 250px;
+    background-color: #fff9e6;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #5a3921;
+    flex-shrink: 0;
+}
+
+#rules-sidebar h2,
+#rules-mobile h2 {
+    margin-top: 0;
+    color: #8b4513;
+    font-size: 18px;
+    text-align: center;
+}
+
+#rules-sidebar ul,
+#rules-mobile ul {
+    padding-left: 20px;
+}
+
+@media (max-width: 900px) {
+    #rules-sidebar {
+        display: none;
+    }
+    #rules-mobile {
+        display: block !important;
+    }
+}
+
+ /* 像素风格按钮 */
+ .more-games-btn {
+   position: fixed;
+   top: 120px;
+   right: 20px;
+   z-index: 9999;
+   display: block;
+   width: 48px;
+   height: 48px;
+   background: #4cc9f0;
+   border: 4px solid #2b2d42;
+   border-radius: 8px;
+   color: white;
+   font-size: 24px;
+   text-align: center;
+   line-height: 48px;
+   text-decoration: none;
+   box-shadow: 4px 4px 0 #2b2d42;
+   transition: all 0.2s ease;
+   cursor: pointer;
+ }
+ 
+ .more-games-btn::after {
+   content: "更多游戏";
+   position: absolute;
+   right: 60px;
+   top: 50%;
+   transform: translateY(-50%); /* 这已经确保整体框垂直居中 */
+   white-space: nowrap;
+   background: #2b2d42;
+   color: white;
+   padding: 8px 12px; /* 调整上下padding使文字居中 */
+   border-radius: 4px;
+   font-size: 14px;
+   line-height: 1; /* 关键：重置行高为1 */
+   opacity: 0;
+   transition: opacity 0.3s ease;
+   pointer-events: none;
+   border: 2px solid #4cc9f0;
+   display: flex; /* 新增：使用flex布局确保完美居中 */
+   align-items: center; /* 新增：垂直居中 */
+   justify-content: center; /* 新增：水平居中 */
+   height: auto; /* 移除固定高度 */
+ }
+ 
+ .more-games-btn:hover {
+   transform: translate(2px, 2px);
+   box-shadow: 2px 2px 0 #2b2d42;
+   background: #4895ef;
+ }
+ 
+ .more-games-btn:hover::after {
+   opacity: 1;
+ }
+    </style>
+<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+<script>LA.init({id:"KsK4gEK6tdiW31X5",ck:"KsK4gEK6tdiW31X5"})</script>
+</head>
+<body>
+    <div id="main-container">
+     <div id="rules-sidebar">
+        <h2>游戏规则</h2>
+        <ul>
+            <li>点击一个方块，它将升级一级。</li>
+            <li>三个或以上相邻同等级方块将自动合成更高级方块。</li>
+            <li>每次点击会消耗一次移动（普通模式）。</li>
+            <li>无尽模式中没有移动限制，但需手动提交分数。</li>
+            <li>康哥试一下😊😊😊😊😊</li>
+        </ul>
+    </div>
+        <div id="game-container">
+            <h1> 九族消消乐 </h1>
+            <p style="text-align: center;">点击升级，三个相邻自动合成，上方掉落方块</p>
+            
+            <!-- 模式选择 -->
+            <div id="mode-selection">
+                <button class="mode-btn" id="normal-mode-btn">普通模式</button>
+                <button class="mode-btn" id="endless-mode-btn">无尽模式</button>
+            </div>
+            
+            <div id="stats">
+                <div class="stat">最高等级: <span id="max-level">0</span></div>
+                <div class="stat">分数: <span id="score">0</span></div>
+                <div class="stat" id="moves-container">剩余次数: <span id="moves-left">30</span></div>
+            </div>
+            
+            <div id="grid"></div>
+            
+            <div id="message"></div>
+            
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <button id="restart-btn">重新开始</button>
+    <button id="endless-submit-btn">提交当前分数</button>
+</div>
+        </div>
+
+        <!-- 排行榜侧边栏 -->
+        <div id="leaderboard-sidebar">
+            <h2>排行榜 - <span id="leaderboard-mode">普通模式（有bug）</span></h2>
+            <div id="leaderboard-tabs">
+                <div class="leaderboard-tab active" data-period="daily">日榜</div>
+                <div class="leaderboard-tab" data-period="weekly">周榜</div>
+                <div class="leaderboard-tab" data-period="monthly">月榜</div>
+                <div class="leaderboard-tab" data-period="alltime">总榜</div>
+            </div>
+            <div id="leaderboard-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>用户名</th>
+                            <th>分数</th>
+                            <th>最高等级</th>
+                            <th>日期</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- 排行榜数据将在这里动态加载 -->
+                        <tr><td colspan="5">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="leaderboard-status">最后更新: --</div>
+            <div id="rules-mobile" style="display: none; margin-top: 20px;">
+                <h2>游戏规则</h2>
+                <ul>
+                    <li>点击一个菜品，它将升级一级。</li>
+                    <li>三个或以上相邻同等级菜品将自动合成更高级菜。</li>
+                    <li>每次点击会消耗一次移动（普通模式）。</li>
+                    <li>无尽模式中没有移动限制，但需手动提交分数。</li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏结束弹窗 -->
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>游戏结束!</h2>
+            <p>你的最终得分: <span id="final-score">0</span></p>
+            <p>最高等级: <span id="final-level">0</span></p>
+            <input type="text" id="username-input" placeholder="输入用户名" maxlength="20">
+            <div>
+                <button id="submit-score-btn">提交分数</button>
+                <button id="cancel-submit-btn">取消</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 游戏配置
+        const config = {
+            gridSize: 5,
+            maxLevel: 15,
+            maxMoves: 30,
+            leaderboardFile: "leaderboard.txt", // 排行榜数据文件
+            maxEntries: 100 // 最大排行榜条目数
+        };
+        
+        // 游戏状态
+        const gameState = {
+            maxLevel: 0,
+            score: 0,
+            grid: [],
+            processing: false,
+            movesLeft: config.maxMoves,
+            gameMode: 'normal', // 'normal' 或 'endless'
+            gameActive: false
+        };
+        
+        // 排行榜数据
+        let leaderboardData = {
+            normal: {
+                daily: [],
+                weekly: [],
+                monthly: [],
+                alltime: []
+            },
+            endless: {
+                daily: [],
+                weekly: [],
+                alltime: []
+            }
+        };
+        
+        // DOM元素
+        const gridEl = document.getElementById('grid');
+        const maxLevelEl = document.getElementById('max-level');
+        const scoreEl = document.getElementById('score');
+        const movesLeftEl = document.getElementById('moves-left');
+        const movesContainerEl = document.getElementById('moves-container');
+        const messageEl = document.getElementById('message');
+        const restartBtn = document.getElementById('restart-btn');
+        const normalModeBtn = document.getElementById('normal-mode-btn');
+        const endlessModeBtn = document.getElementById('endless-mode-btn');
+        const gameOverModal = document.getElementById('game-over-modal');
+        const finalScoreEl = document.getElementById('final-score');
+        const finalLevelEl = document.getElementById('final-level');
+        const usernameInput = document.getElementById('username-input');
+        const submitScoreBtn = document.getElementById('submit-score-btn');
+        const cancelSubmitBtn = document.getElementById('cancel-submit-btn');
+        const leaderboardModeEl = document.getElementById('leaderboard-mode');
+        const leaderboardBody = document.getElementById('leaderboard-body');
+        const leaderboardTabs = document.querySelectorAll('.leaderboard-tab');
+        const leaderboardStatusEl = document.getElementById('leaderboard-status');
+        const endlessSubmitBtn = document.getElementById('endless-submit-btn');
+        
+        // 初始化游戏
+        function initGame() {
+            gameState.maxLevel = 0;
+            gameState.score = 0;
+            gameState.grid = Array(config.gridSize * config.gridSize).fill(0);
+            gameState.processing = false;
+            gameState.movesLeft = config.maxMoves;
+            gameState.gameActive = true;
+            
+            maxLevelEl.textContent = gameState.maxLevel;
+            scoreEl.textContent = gameState.score;
+            movesLeftEl.textContent = gameState.movesLeft;
+            messageEl.textContent = '';
+            
+            // 显示/隐藏移动次数
+            movesContainerEl.style.display = gameState.gameMode === 'normal' ? 'block' : 'none';
+            
+            // 显示/隐藏无尽模式提交按钮
+            endlessSubmitBtn.style.display = gameState.gameMode === 'endless' ? 'block' : 'none';
+            
+            // 初始化网格
+            renderGrid();
+            
+            // 生成初始布局(确保没有可直接合成的)
+            generateInitialLayout();
+            
+            // 加载排行榜数据
+            loadLeaderboard();
+        }
+        
+        // 生成初始布局(确保没有3个或以上相连)
+        function generateInitialLayout() {
+            // 首先生成随机布局
+            for (let i = 0; i < gameState.grid.length; i++) {
+                gameState.grid[i] = Math.floor(Math.random() * 3) + 1;
+            }
+            
+            // 检查并修复可能存在的初始合成
+            let hasMatches = true;
+            let attempts = 0;
+            const maxAttempts = 100;
+            
+            while (hasMatches && attempts < maxAttempts) {
+                hasMatches = false;
+                
+                // 检查所有格子
+                for (let i = 0; i < gameState.grid.length; i++) {
+                    const group = findConnectedGroup(i);
+                    if (group.length >= 3) {
+                        // 找到匹配，随机改变其中一个格子的值
+                        const randomIndex = group[Math.floor(Math.random() * group.length)];
+                        gameState.grid[randomIndex] = Math.floor(Math.random() * 3) + 1;
+                        hasMatches = true;
+                        break;
+                    }
+                }
+                
+                attempts++;
+            }
+            
+            // 更新网格显示
+            for (let i = 0; i < gameState.grid.length; i++) {
+                updateCell(i);
+            }
+        }
+        
+        // 渲染游戏网格
+        function renderGrid() {
+            gridEl.innerHTML = '';
+            
+            for (let i = 0; i < config.gridSize * config.gridSize; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.dataset.index = i;
+                cell.addEventListener('click', () => handleCellClick(i));
+                gridEl.appendChild(cell);
+            }
+        }
+        
+        // 更新格子显示
+        function updateCell(index) {
+            const cell = gridEl.children[index];
+            const level = gameState.grid[index];
+            
+            // 移除所有等级类
+            for (let i = 1; i <= config.maxLevel; i++) {
+                cell.classList.remove(`lvl${i}`);
+            }
+            
+            if (level > 0) {
+                // 添加新等级类
+                cell.classList.add(`lvl${Math.min(level, 15)}`);
+                cell.textContent = level;
+                cell.style.opacity = '1';
+                cell.style.backgroundColor = '';
+            } else {
+                // 空格子
+                cell.textContent = '';
+                cell.style.backgroundColor = 'transparent';
+                cell.style.opacity = '0.3';
+            }
+        }
+        
+        // 处理格子点击
+        function handleCellClick(index) {
+            if (!gameState.gameActive || gameState.processing || gameState.grid[index] === 0) return;
+            
+            // 在普通模式下检查剩余次数
+            if (gameState.gameMode === 'normal') {
+                if (gameState.movesLeft <= 0) {
+                    showMessage("游戏结束! 次数已用完");
+                    endGame();
+                    return;
+                }
+                gameState.movesLeft--;
+                movesLeftEl.textContent = gameState.movesLeft;
+            }
+            
+            // 提升等级
+            gameState.grid[index]++;
+            updateMaxLevel(gameState.grid[index]);
+            updateCell(index);
+            
+            // 播放动画
+            const cell = gridEl.children[index];
+            cell.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                cell.style.transform = '';
+            }, 200);
+            
+            // 检查并处理相邻匹配
+            checkAndProcessMatches();
+        }
+        
+        // 更新最高等级
+        function updateMaxLevel(level) {
+            if (level > gameState.maxLevel) {
+                gameState.maxLevel = level;
+                maxLevelEl.textContent = gameState.maxLevel;
+            }
+        }
+        
+        // 更新分数
+        function updateScore(points) {
+            gameState.score += points;
+            scoreEl.textContent = gameState.score;
+        }
+        
+        // 检查并处理相邻匹配
+        function checkAndProcessMatches() {
+            gameState.processing = true;
+            let matchesFound = false;
+            const processed = new Set();
+            
+            // 查找所有匹配组
+            for (let i = 0; i < gameState.grid.length; i++) {
+                if (processed.has(i) || gameState.grid[i] === 0) continue;
+                
+                const group = findConnectedGroup(i);
+                if (group.length >= 3) {
+                    matchesFound = true;
+                    processMatch(group);
+                    group.forEach(idx => processed.add(idx));
+                }
+            }
+            
+            if (matchesFound) {
+                // 处理下落和新格子
+                setTimeout(processFallAndNewDishes, 500);
+            } else {
+                // 检查游戏是否结束 (普通模式且没有移动次数)
+                if (gameState.gameMode === 'normal' && gameState.movesLeft <= 0) {
+                    setTimeout(() => {
+                        endGame();
+                    }, 500);
+                } else {
+                    gameState.processing = false;
+                }
+            }
+        }
+        
+        // 查找相连的相同等级组
+        function findConnectedGroup(startIndex) {
+            const targetLevel = gameState.grid[startIndex];
+            const visited = new Set();
+            const queue = [startIndex];
+            
+            while (queue.length > 0) {
+                const current = queue.shift();
+                if (visited.has(current)) continue;
+                
+                visited.add(current);
+                const neighbors = getNeighbors(current);
+                
+                for (const neighbor of neighbors) {
+                    if (gameState.grid[neighbor] === targetLevel) {
+                        queue.push(neighbor);
+                    }
+                }
+            }
+            
+            return Array.from(visited);
+        }
+        
+        // 获取相邻格子索引
+        function getNeighbors(index) {
+            const neighbors = [];
+            const row = Math.floor(index / config.gridSize);
+            const col = index % config.gridSize;
+            
+            // 上
+            if (row > 0) neighbors.push(index - config.gridSize);
+            // 下
+            if (row < config.gridSize - 1) neighbors.push(index + config.gridSize);
+            // 左
+            if (col > 0) neighbors.push(index - 1);
+            // 右
+            if (col < config.gridSize - 1) neighbors.push(index + 1);
+            
+            return neighbors;
+        }
+        
+        // 处理匹配的菜品组
+        function processMatch(group) {
+            if (group.length < 3) return;
+            
+            const baseLevel = gameState.grid[group[0]];
+            
+            // 选择第一个作为合成位置
+            const targetIndex = group[0];
+            // 升级公式：3个升1级，每多1个额外升1级
+            const levelIncrease = 1 + Math.max(0, group.length - 3);
+            const newLevel = baseLevel + levelIncrease;
+            
+            // 计算分数 = 基础等级 × 数量 × 10
+            const points = baseLevel * group.length * 10;
+            updateScore(points);
+            
+            gameState.grid[targetIndex] = newLevel;
+            updateMaxLevel(newLevel);
+            updateCell(targetIndex);
+            
+            // 播放合成动画
+            const targetCell = gridEl.children[targetIndex];
+            targetCell.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                targetCell.style.transform = '';
+            }, 300);
+            
+            // 其他匹配格子设为空
+            for (let i = 1; i < group.length; i++) {
+                gameState.grid[group[i]] = 0;
+                updateCell(group[i]);
+            }
+            
+            showMessage(`${group.length}个${baseLevel}级合成${newLevel}级，获得${points}分`);
+        }
+        
+        // 处理下落和新菜品
+        function processFallAndNewDishes() {
+            // 处理下落 - 按列处理
+            for (let col = 0; col < config.gridSize; col++) {
+                const emptySlots = [];
+                
+                // 从下往上检查
+                for (let row = config.gridSize - 1; row >= 0; row--) {
+                    const index = row * config.gridSize + col;
+                    
+                    if (gameState.grid[index] === 0) {
+                        emptySlots.push(index);
+                    } else if (emptySlots.length > 0) {
+                        // 找到第一个空位
+                        const emptyIndex = emptySlots.shift();
+                        
+                        // 移动菜品
+                        gameState.grid[emptyIndex] = gameState.grid[index];
+                        gameState.grid[index] = 0;
+                        
+                        // 更新显示
+                        updateCell(index);
+                        updateCell(emptyIndex);
+                        
+                        // 播放下落动画
+                        const movingCell = gridEl.children[emptyIndex];
+                        movingCell.style.transform = 'translateY(-100%)';
+                        movingCell.style.transition = 'transform 1.5s';
+                        
+                        setTimeout(() => {
+                            movingCell.style.transform = '';
+                            movingCell.style.transition = '';
+                        }, 10);
+                        
+                        // 将当前位置加入空位列表
+                        emptySlots.push(index);
+                    }
+                }
+                
+                // 填充顶部空位
+                for (const emptyIndex of emptySlots) {
+                    setTimeout(() => {
+                        gameState.grid[emptyIndex] = Math.floor(Math.random() * 3) + 1;
+                        updateCell(emptyIndex);
+                        
+                        // 新菜品动画
+                        const newCell = gridEl.children[emptyIndex];
+                        newCell.style.transform = 'scale(0.5)';
+                        newCell.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            newCell.style.transform = '';
+                            newCell.style.opacity = '1';
+                        }, 100);
+                    }, 100 * (emptySlots.indexOf(emptyIndex) + 1));
+                }
+            }
+            
+            // 检查新的匹配
+            setTimeout(() => {
+                checkAndProcessMatches();
+            }, 500);
+        }
+        
+        // 显示消息
+        function showMessage(msg) {
+            messageEl.textContent = msg;
+            setTimeout(() => {
+                if (messageEl.textContent === msg) {
+                    messageEl.textContent = '';
+                }
+            }, 2000);
+        }
+        
+        // 游戏结束
+        function endGame() {
+            gameState.gameActive = false;
+            finalScoreEl.textContent = gameState.score;
+            finalLevelEl.textContent = gameState.maxLevel;
+            gameOverModal.style.display = 'flex';
+        }
+        
+        // 提交分数到排行榜
+        async function submitScore() {
+            const username = usernameInput.value.trim();
+            if (!username) {
+                alert('请输入用户名');
+                return;
+            }
+            
+            const now = new Date();
+            const scoreData = {
+                username: username,
+                score: gameState.score,
+                maxLevel: gameState.maxLevel,
+                date: now.toISOString(),
+                timestamp: now.getTime(),
+                mode: gameState.gameMode
+            };
+            
+            // 关闭弹窗
+            gameOverModal.style.display = 'none';
+            usernameInput.value = '';
+            
+            // 保存分数到服务器
+            try {
+                await saveScoreToServer(scoreData);
+                showMessage("分数已提交!");
+                // 重新加载排行榜
+                loadLeaderboard();
+            } catch (error) {
+                console.error("提交分数失败:", error);
+                showMessage("提交分数失败，请重试");
+            }
+        }
+        
+        // 保存分数到服务器
+        async function saveScoreToServer(scoreData) {
+            // 获取现有排行榜数据
+            const currentData = await fetchLeaderboardData();
+            
+            // 添加新分数
+            currentData.push(scoreData);
+            
+            // 按分数排序
+            currentData.sort((a, b) => b.score - a.score);
+            
+            // 限制最大条目数
+            if (currentData.length > config.maxEntries) {
+                currentData.length = config.maxEntries;
+            }
+            
+            // 转换为文本格式
+            const txtContent = currentData.map(entry => 
+                `${entry.mode}|${entry.username}|${entry.score}|${entry.maxLevel}|${entry.timestamp}`
+            ).join('\n');
+            
+            // 发送到服务器保存
+            const formData = new FormData();
+            formData.append('data', txtContent);
+            formData.append('filename', config.leaderboardFile);
+            
+            const response = await fetch('save_leaderboard.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('保存失败');
+            }
+        }
+        
+        // 从服务器加载排行榜数据
+        async function loadLeaderboard() {
+            try {
+                const rawData = await fetchLeaderboardData();
+                
+                // 清空现有数据
+                leaderboardData = {
+                    normal: { daily: [], weekly: [], monthly: [], alltime: [] },
+                    endless: { daily: [], weekly: [], monthly: [], alltime: [] }
+                };
+                
+                // 当前时间
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                
+                // 处理数据
+                rawData.forEach(entry => {
+                    const entryDate = new Date(entry.timestamp);
+                    
+                    // 添加到总榜
+                    leaderboardData[entry.mode].alltime.push(entry);
+                    
+                    // 添加到月榜
+                    if (entryDate >= monthAgo) {
+                        leaderboardData[entry.mode].monthly.push(entry);
+                    }
+                    
+                    // 添加到周榜
+                    if (entryDate >= weekAgo) {
+                        leaderboardData[entry.mode].weekly.push(entry);
+                    }
+                    
+                    // 添加到日榜
+                    if (entryDate >= today) {
+                        leaderboardData[entry.mode].daily.push(entry);
+                    }
+                });
+                
+                // 排序每个排行榜
+                for (const mode in leaderboardData) {
+                    for (const period in leaderboardData[mode]) {
+                        leaderboardData[mode][period].sort((a, b) => b.score - a.score);
+                    }
+                }
+                
+                // 更新显示
+// 更新显示
+showLeaderboard();
+leaderboardStatusEl.innerHTML = `最后更新: ${new Date().toLocaleTimeString()} | made by 橘猫 | 好玩爱玩嘿嘿：<a href="www.baidu.com" style="color: #8b4513;">www.baidu.com</a>`;
+            } catch (error) {
+                console.error("加载排行榜失败:", error);
+                leaderboardBody.innerHTML = '<tr><td colspan="5">加载排行榜失败</td></tr>';
+                leaderboardStatusEl.textContent = '加载失败，请刷新重试';
+            }
+        }
+        
+        // 从服务器获取排行榜原始数据
+        async function fetchLeaderboardData() {
+            try {
+                const response = await fetch(`${config.leaderboardFile}?t=${Date.now()}`);
+                if (!response.ok) {
+                    throw new Error('获取数据失败');
+                }
+                
+                const text = await response.text();
+                if (!text.trim()) {
+                    return [];
+                }
+                
+                // 解析文本数据
+                return text.split('\n').filter(line => line.trim()).map(line => {
+                    const [mode, username, score, maxLevel, timestamp] = line.split('|');
+                    return {
+                        mode,
+                        username,
+                        score: parseInt(score),
+                        maxLevel: parseInt(maxLevel),
+                        timestamp: parseInt(timestamp),
+                        date: new Date(parseInt(timestamp)).toISOString()
+                    };
+                });
+            } catch (error) {
+                console.error("获取排行榜数据失败:", error);
+                return [];
+            }
+        }
+        
+        // 显示排行榜
+        function showLeaderboard(period = 'daily') {
+            leaderboardModeEl.textContent = gameState.gameMode === 'normal' ? '普通模式' : '无尽模式';
+            
+            // 更新活跃标签
+            leaderboardTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.period === period);
+            });
+            
+            // 获取当前排行榜数据
+            const currentLeaderboard = leaderboardData[gameState.gameMode][period];
+            
+            // 清空表格
+            leaderboardBody.innerHTML = '';
+            
+            // 填充数据
+            if (currentLeaderboard.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5">暂无数据</td>`;
+                leaderboardBody.appendChild(row);
+            } else {
+                currentLeaderboard.slice(0, 20).forEach((entry, index) => {
+                    const row = document.createElement('tr');
+                    const date = new Date(entry.timestamp);
+                    const dateStr = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+                    
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${entry.username}</td>
+                        <td>${entry.score}</td>
+                        <td>${entry.maxLevel}</td>
+                        <td>${dateStr}</td>
+                    `;
+                    leaderboardBody.appendChild(row);
+                });
+            }
+        }
+        
+        // 事件监听
+        restartBtn.addEventListener('click', initGame);
+        
+        normalModeBtn.addEventListener('click', () => {
+            gameState.gameMode = 'normal';
+            initGame();
+        });
+        
+        endlessModeBtn.addEventListener('click', () => {
+            gameState.gameMode = 'endless';
+            initGame();
+        });
+        
+        submitScoreBtn.addEventListener('click', submitScore);
+        
+        cancelSubmitBtn.addEventListener('click', () => {
+            gameOverModal.style.display = 'none';
+            usernameInput.value = '';
+        });
+        
+        leaderboardTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                showLeaderboard(tab.dataset.period);
+            });
+        });
+        
+        // 无尽模式提交按钮点击事件
+        endlessSubmitBtn.addEventListener('click', () => {
+            if (gameState.gameActive && gameState.gameMode === 'endless') {
+                endGame();
+            }
+        });
+        
+        // 初始化游戏 (默认普通模式)
+        gameState.gameMode = 'normal';
+        
+        // 初始化游戏
+        initGame();
+    </script>
+
+</body>
+</html>
